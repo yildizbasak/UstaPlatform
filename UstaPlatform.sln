@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UstaPlatform.Domain", "UstaPlatform.Domain\UstaPlatform.Domain.csproj", "{3D45D20D-0FC1-41DB-9DFA-56E617BF82E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UstaPlatform.App", "UstaPlatform.App\UstaPlatform.App.csproj", "{0FDA05A3-81EA-4AB4-946D-6414A6760C8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UstaPlatform.Pricing", "UstaPlatform.Pricing\UstaPlatform.Pricing.csproj", "{0503CDD7-FDFA-4C91-B8A4-3CF4872C136A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UstaPlatform.Rules.Default", "UstaPlatform.Rules.Default\UstaPlatform.Rules.Default.csproj", "{BF0BA7DB-A871-40C3-9E5A-5E736EC38963}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UstaPlatform.Rules.Loyalty", "UstaPlatform.Rules.Loyalty\UstaPlatform.Rules.Loyalty.csproj", "{5E7C9AD7-57AA-447F-B04E-036E3112824D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UstaPlatform.Tests", "UstaPlatform.Tests\UstaPlatform.Tests.csproj", "{CFA7030E-57F3-4109-9F40-DD00208D0733}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FB6FA350-4C8D-429F-ADC1-2701B23258D1}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D45D20D-0FC1-41DB-9DFA-56E617BF82E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D45D20D-0FC1-41DB-9DFA-56E617BF82E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D45D20D-0FC1-41DB-9DFA-56E617BF82E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D45D20D-0FC1-41DB-9DFA-56E617BF82E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FDA05A3-81EA-4AB4-946D-6414A6760C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FDA05A3-81EA-4AB4-946D-6414A6760C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FDA05A3-81EA-4AB4-946D-6414A6760C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FDA05A3-81EA-4AB4-946D-6414A6760C8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0503CDD7-FDFA-4C91-B8A4-3CF4872C136A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0503CDD7-FDFA-4C91-B8A4-3CF4872C136A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0503CDD7-FDFA-4C91-B8A4-3CF4872C136A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0503CDD7-FDFA-4C91-B8A4-3CF4872C136A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF0BA7DB-A871-40C3-9E5A-5E736EC38963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF0BA7DB-A871-40C3-9E5A-5E736EC38963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF0BA7DB-A871-40C3-9E5A-5E736EC38963}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF0BA7DB-A871-40C3-9E5A-5E736EC38963}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E7C9AD7-57AA-447F-B04E-036E3112824D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E7C9AD7-57AA-447F-B04E-036E3112824D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E7C9AD7-57AA-447F-B04E-036E3112824D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E7C9AD7-57AA-447F-B04E-036E3112824D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFA7030E-57F3-4109-9F40-DD00208D0733}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFA7030E-57F3-4109-9F40-DD00208D0733}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFA7030E-57F3-4109-9F40-DD00208D0733}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFA7030E-57F3-4109-9F40-DD00208D0733}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
