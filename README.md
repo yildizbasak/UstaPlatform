@@ -1,102 +1,82 @@
-Proje: UstaPlatform - Şehrin Uzmanlık Platformu
-Bu proje, Nesne Yönelimli Programlama (NYP) ve İleri C# dersi kapsamında geliştirilmiştir. Amacı, Arcadia şehrindeki uzmanlarla vatandaş taleplerini eşleştiren, dinamik ve genişletilebilir bir platform oluşturmaktır. 
+# Proje: UstaPlatform - Åehrin UzmanlÄ±k Platformu
 
+Bu proje, Nesne YÃ¶nelimli Programlama (NYP) ve Ä°leri C\# dersi kapsamÄ±nda geliÅŸtirilmiÅŸtir. AmacÄ±, Arcadia ÅŸehrindeki uzmanlarla vatandaÅŸ taleplerini eÅŸleÅŸtiren, dinamik ve geniÅŸletilebilir bir platform oluÅŸturmaktÄ±r.
 
-Projenin temel odak noktası, katı kurallar yerine, Açık/Kapalı Prensibine (OCP) uygun, "Plug-in" (Eklenti) tabanlı bir fiyatlandırma mimarisi kurmaktır. 
+Projenin temel odak noktasÄ±, katÄ± kurallar yerine, AÃ§Ä±k/KapalÄ± Prensibine (OCP) uygun, "Plug-in" (Eklenti) tabanlÄ± bir fiyatlandÄ±rma mimarisi kurmaktÄ±r.
 
+## Uygulanan Teknik Gereksinimler
 
-Uygulanan Teknik Gereksinimler
-Proje, ödev rehberinde belirtilen aşağıdaki İleri C# özelliklerini ve SOLID prensiplerini uygulamaktadır:
+Proje, Ã¶dev rehberinde belirtilen aÅŸaÄŸÄ±daki Ä°leri C\# Ã¶zelliklerini ve SOLID prensiplerini uygulamaktadÄ±r:
 
+  * **AÃ§Ä±k/KapalÄ± Prensibi (OCP):** Sistemin kalbi olan `PricingEngine`, ana kodu deÄŸiÅŸtirmeden yeni fiyat kurallarÄ±nÄ±n (`.dll` dosyalarÄ± olarak) sisteme eklenmesine olanak tanÄ±r.
+  * **BaÄŸÄ±mlÄ±lÄ±klarÄ±n Tersine Ã‡evrilmesi (DIP):** Fiyatlama motoru, somut kural sÄ±nÄ±flarÄ±na deÄŸil, `IPricingRule` arayÃ¼zÃ¼ne baÄŸÄ±mlÄ±dÄ±r.
+  * **init-only Ã–zelliÄŸi:** `WorkOrder` gibi varlÄ±k sÄ±nÄ±flarÄ±nda, `ID` ve `KayitZamani` gibi alanlar nesne oluÅŸturulduktan sonra deÄŸiÅŸtirilemez.
+  * **Dizinleyici (Indexer):** `Schedule` sÄ±nÄ±fÄ±, `Schedule[DateOnly gÃ¼n]` formatÄ±nda eriÅŸime izin vererek o gÃ¼ne ait iÅŸ emirlerini listeler.
+  * **Ã–zel `IEnumerable<T>` Koleksiyonu:** `Route` sÄ±nÄ±fÄ±, `IEnumerable` arayÃ¼zÃ¼nÃ¼ uygular ve `new Route { {10, 20} }` gibi koleksiyon baÅŸlatÄ±cÄ±larÄ± (collection initializers) destekler.
 
-Açık/Kapalı Prensibi (OCP): Sistemin kalbi olan PricingEngine, ana kodu değiştirmeden yeni fiyat kurallarının (.dll dosyaları olarak) sisteme eklenmesine olanak tanır. 
+## Kurulum ve Ã‡alÄ±ÅŸtÄ±rma Bilgisi
 
+1.  Projeyi Visual Studio 2022 ile aÃ§Ä±n.
+2.  Solution Explorer'da `Solution 'UstaPlatform'` Ã¼zerine saÄŸ tÄ±klayÄ±p "Restore NuGet Packages" (NuGet Paketlerini Geri YÃ¼kle) deyin.
+3.  Solution Explorer'da `Solution 'UstaPlatform'` Ã¼zerine saÄŸ tÄ±klayÄ±p "Rebuild Solution" (Ã‡Ã¶zÃ¼mÃ¼ Yeniden Derle) deyin.
+      * *(Bu adÄ±m, `UstaPlatform.Rules.Default.dll` ve `UstaPlatform.Rules.Loyalty.dll` dosyalarÄ±nÄ± `UstaPlatform.App` projesinin `/bin/Debug/.../Rules` klasÃ¶rÃ¼ne otomatik olarak kopyalayacaktÄ±r.)*
+4.  Solution Explorer'da `UstaPlatform.App` projesini "Set as Startup Project" (BaÅŸlangÄ±Ã§ Projesi Olarak Ayarla) olarak seÃ§in.
+5.  YeÅŸil "Play" (Oynat) tuÅŸuna (veya F5'e) basarak projeyi Ã§alÄ±ÅŸtÄ±rÄ±n.
 
+## TasarÄ±m KararlarÄ±: Plug-in (Eklenti) Mimarisi NasÄ±l Ã‡alÄ±ÅŸÄ±yor?
 
-Bağımlılıkların Tersine Çevrilmesi (DIP): Fiyatlama motoru, somut kural sınıflarına değil, IPricingRule arayüzüne bağımlıdır. 
+Projenin en kritik gereksinimi, ana uygulama deÄŸiÅŸmeden sisteme yeni fiyat kurallarÄ± ekleyebilmektir. Bu mimari, C\#'Ä±n "Reflection" (YansÄ±ma) Ã¶zelliÄŸi kullanÄ±larak saÄŸlanmÄ±ÅŸtÄ±r.
 
+  * **`IPricingRule` ArayÃ¼zÃ¼ (SÃ¶zleÅŸme):** `UstaPlatform.Domain` projesinde, tÃ¼m kurallarÄ±n uymasÄ± gereken bir sÃ¶zleÅŸme (`IPricingRule`) tanÄ±mlanmÄ±ÅŸtÄ±r. Bu arayÃ¼z, BaÄŸÄ±mlÄ±lÄ±klarÄ±n Tersine Ã‡evrilmesi (DIP) prensibini uygular.
+  * **`PricingEngine` (Fiyatlama Motoru):** `UstaPlatform.Pricing` projesindeki bu sÄ±nÄ±f, uygulama baÅŸladÄ±ÄŸÄ±nda (`new PricingEngine()` Ã§aÄŸrÄ±ldÄ±ÄŸÄ±nda) Ã§alÄ±ÅŸÄ±r.
+  * **DLL TaramasÄ± (Reflection):** Motor, uygulamanÄ±n Ã§alÄ±ÅŸtÄ±ÄŸÄ± dizindeki `/Rules` klasÃ¶rÃ¼nÃ¼ tarar. `System.Reflection` kÃ¼tÃ¼phanesini kullanarak bu klasÃ¶rdeki tÃ¼m `.dll` dosyalarÄ±nÄ± bulur ve bu dosyalarÄ±n "iÃ§ine bakar".
+  * **Kural YÃ¼kleme:** Motor, DLL'ler iÃ§inde `IPricingRule` arayÃ¼zÃ¼nÃ¼ uygulayan tÃ¼m somut sÄ±nÄ±flarÄ± bulur, bu sÄ±nÄ±flardan nesneler (instance) yaratÄ±r ve Ã¶zel bir `List<IPricingRule>` listesine ekler.
+  * **Kompozisyon ile Fiyatlama:** Fiyat hesaplamasÄ± istendiÄŸinde (`CalculatePrice`), motor bu listedeki tÃ¼m kurallarÄ± temel Ã¼cret Ã¼zerine sÄ±rayla uygular (Temel Ãœcret + Kural1 + Kural2...).
 
-init-only Özelliği: WorkOrder gibi varlık sınıflarında, ID ve KayitZamani gibi alanlar nesne oluşturulduktan sonra değiştirilemez. 
+Bu tasarÄ±m sayesinde, `/Rules` klasÃ¶rÃ¼ne (Ã¶rneÄŸin `BayramIndirimi.dll` adÄ±nda) yeni bir dosya bÄ±rakmak, sistemin yeniden derlenmeye gerek kalmadan bu kuralÄ± otomatik olarak tanÄ±masÄ±nÄ± ve Ã§alÄ±ÅŸtÄ±rmasÄ±nÄ± saÄŸlar.
 
+## Zorunlu Demo AkÄ±ÅŸÄ± ve Ã‡Ä±ktÄ±sÄ±
 
-Dizinleyici (Indexer): Schedule sınıfı, Schedule[DateOnly gün] formatında erişime izin vererek o güne ait iş emirlerini listeler. 
+Ã–devin zorunlu senaryosu, sisteme yeni bir kural (`LoyaltyDiscountRule.dll`) eklendiÄŸinde fiyatÄ±n otomatik olarak deÄŸiÅŸtiÄŸini gÃ¶stermektir.
 
+Proje ilk Ã§alÄ±ÅŸtÄ±rÄ±ldÄ±ÄŸÄ±nda (Rebuild Solution ile) `/Rules` klasÃ¶rÃ¼nde 2 adet DLL (`UstaPlatform.Rules.Default.dll` ve `UstaPlatform.Rules.Loyalty.dll`) bulunur.
 
-Özel IEnumerable<T> Koleksiyonu: Route sınıfı, IEnumerable arayüzünü uygular ve new Route { {10, 20} } gibi koleksiyon başlatıcıları (collection initializers) destekler. 
+AÅŸaÄŸÄ±daki konsol Ã§Ä±ktÄ±sÄ±, motorun bu iki kuralÄ± da bulduÄŸunu ve hesaplamaya dahil ettiÄŸini kanÄ±tlar:
 
-Kurulum ve Çalıştırma Bilgisi 
-
-Projeyi Visual Studio 2022 ile açın.
-
-Solution Explorer'da Solution 'UstaPlatform' üzerine sağ tıklayıp "Restore NuGet Packages" (NuGet Paketlerini Geri Yükle) deyin.
-
-Solution Explorer'da Solution 'UstaPlatform' üzerine sağ tıklayıp "Rebuild Solution" (Çözümü Yeniden Derle) deyin.
-
-(Bu adım, UstaPlatform.Rules.Default.dll ve UstaPlatform.Rules.Loyalty.dll dosyalarını UstaPlatform.App projesinin /bin/Debug/.../Rules klasörüne otomatik olarak kopyalayacaktır.)
-
-Solution Explorer'da UstaPlatform.App projesini "Set as Startup Project" (Başlangıç Projesi Olarak Ayarla) olarak seçin.
-
-Yeşil "Play" (Oynat) tuşuna (veya F5'e) basarak projeyi çalıştırın.
-
-Tasarım Kararları: Plug-in (Eklenti) Mimarisi Nasıl Çalışıyor? 
-
-Projenin en kritik gereksinimi, ana uygulama değişmeden sisteme yeni fiyat kuralları ekleyebilmektir.  Bu mimari, C#'ın "Reflection" (Yansıma) özelliği kullanılarak sağlanmıştır.
-
-
-
-IPricingRule Arayüzü (Sözleşme): UstaPlatform.Domain projesinde, tüm kuralların uyması gereken bir sözleşme (IPricingRule) tanımlanmıştır. Bu arayüz, Bağımlılıkların Tersine Çevrilmesi (DIP) prensibini uygular. 
-
-
-PricingEngine (Fiyatlama Motoru): UstaPlatform.Pricing projesindeki bu sınıf, uygulama başladığında (new PricingEngine() çağrıldığında) çalışır.
-
-
-DLL Taraması (Reflection): Motor, uygulamanın çalıştığı dizindeki /Rules klasörünü tarar.  System.Reflection kütüphanesini kullanarak bu klasördeki tüm .dll dosyalarını bulur ve bu dosyaların "içine bakar".
-
-
-Kural Yükleme: Motor, DLL'ler içinde IPricingRule arayüzünü uygulayan tüm somut sınıfları bulur,  bu sınıflardan nesneler (instance) yaratır ve özel bir List<IPricingRule> listesine ekler.
-
-
-Kompozisyon ile Fiyatlama: Fiyat hesaplaması istendiğinde (CalculatePrice), motor bu listedeki tüm kuralları temel ücret üzerine sırayla uygular (Temel Ücret + Kural1 + Kural2...). 
-
-Bu tasarım sayesinde, /Rules klasörüne (örneğin BayramIndirimi.dll adında) yeni bir dosya bırakmak, sistemin yeniden derlenmeye gerek kalmadan bu kuralı otomatik olarak tanımasını ve çalıştırmasını sağlar.
-
-Zorunlu Demo Akışı ve Çıktısı 
-
-Ödevin zorunlu senaryosu, sisteme yeni bir kural (LoyaltyDiscountRule.dll) eklendiğinde fiyatın otomatik olarak değiştiğini göstermektir. 
-
-Proje ilk çalıştırıldığında (Rebuild Solution ile) /Rules klasöründe 2 adet DLL (UstaPlatform.Rules.Default.dll ve UstaPlatform.Rules.Loyalty.dll) bulunur.
-
-Aşağıdaki konsol çıktısı, motorun bu iki kuralı da bulduğunu ve hesaplamaya dahil ettiğini kanıtlar:
-
-UstaPlatform Simülasyonu Başlatılıyor...
-İş Emri ... oluşturuldu.
-İş Emri Planlanan Tarih: 26.10.2025 (Pazar)
+```
+UstaPlatform SimÃ¼lasyonu BaÅŸlatÄ±lÄ±yor...
+Ä°ÅŸ Emri ... oluÅŸturuldu.
+Ä°ÅŸ Emri Planlanan Tarih: 26.10.2025 (Pazar)
 -----------------------------------------
 
-ÖDEVİN ANA SENARYOSU: PLUG-IN FİYATLAMA MOTORU
+Ã–DEVÄ°N ANA SENARYOSU: PLUG-IN FÄ°YATLAMA MOTORU
 
-Fiyatlama Motoru (PricingEngine) başlatılıyor...
-[PricingEngine] Başlatılıyor... Kural DLL'leri taranıyor...
-[PricingEngine] 'Rules' klasöründe 2 adet .dll bulundu.
-[PricingEngine] KURAL YÜKLENDİ: Haftasonu Ek Ücreti (Kaynak: UstaPlatform.Rules.Default.dll)
-[PricingEngine] KURAL YÜKLENDİ: Sadakat İndirimi (%10) (Kaynak: UstaPlatform.Rules.Loyalty.dll)
+Fiyatlama Motoru (PricingEngine) baÅŸlatÄ±lÄ±yor...
+[PricingEngine] BaÅŸlatÄ±lÄ±yor... Kural DLL'leri taranÄ±yor...
+[PricingEngine] 'Rules' klasÃ¶rÃ¼nde 2 adet .dll bulundu.
+[PricingEngine] KURAL YÃœKLENDÄ°: Haftasonu Ek Ãœcreti (Kaynak: UstaPlatform.Rules.Default.dll)
+[PricingEngine] KURAL YÃœKLENDÄ°: Sadakat Ä°ndirimi (%10) (Kaynak: UstaPlatform.Rules.Loyalty.dll)
 
-...Motor taramayı bitirdi.
-Mevcut kurallar kullanılarak fiyat hesaplanıyor:
-[PricingEngine] Fiyat hesaplanıyor... (Temel Ücret: ?150,00)
-  -> Kural Uygulandı: Haftasonu Ek Ücreti, Etki: ?50,00
-  -> Kural Uygulandı: Sadakat İndirimi (%10), Etki: -?20,00
-[PricingEngine] HESAPLANAN SON FİYAT: ?180,00
+...Motor taramayÄ± bitirdi.
+Mevcut kurallar kullanÄ±larak fiyat hesaplanÄ±yor:
+[PricingEngine] Fiyat hesaplanÄ±yor... (Temel Ãœcret: ?150,00)
+  -> Kural UygulandÄ±: Haftasonu Ek Ãœcreti, Etki: ?50,00
+  -> Kural UygulandÄ±: Sadakat Ä°ndirimi (%10), Etki: -?20,00
+[PricingEngine] HESAPLANAN SON FÄ°YAT: ?180,00
+```
 
+```
 -----------------------------------------
-İŞ EMRİ ÖZETİ (Senaryo 1):
-  -> Temel Ücret: ?150,00
-  -> SON FİYAT  : ?180,00
+Ä°Å EMRÄ° Ã–ZETÄ° (Senaryo 1):
+  -> Temel Ãœcret: ?150,00
+  -> SON FÄ°YAT  : ?180,00
 -----------------------------------------
-Bu çıktı, motorun yeni .dll dosyasını (LoyaltyDiscountRule) yeniden derlemeye gerek kalmadan otomatik olarak bulduğunu ve 150 TL'lik temel ücrete önce 50 TL eklediğini (200 TL), ardından bu 200 TL üzerinden %10 indirim (-20 TL) uygulayarak son fiyatı 180 TL olarak hesapladığını kanıtlar. 
+```
 
-Opsiyonel Testler (Ek Puan) 
+Bu Ã§Ä±ktÄ±, motorun yeni `.dll` dosyasÄ±nÄ± (`LoyaltyDiscountRule`) yeniden derlemeye gerek kalmadan otomatik olarak bulduÄŸunu ve 150 TL'lik temel Ã¼crete Ã¶nce 50 TL eklediÄŸini (200 TL), ardÄ±ndan bu 200 TL Ã¼zerinden %10 indirim (-20 TL) uygulayarak son fiyatÄ± 180 TL olarak hesapladÄ±ÄŸÄ±nÄ± kanÄ±tlar.
 
-Ek puan gereksinimi için UstaPlatform.Tests adında bir xUnit projesi oluşturulmuştur.
+## Opsiyonel Testler (Ek Puan)
 
-Bu proje, Visual Studio Test Explorer üzerinden çalıştırıldığında, hem Schedule sınıfının Dizinleyici (Indexer) özelliği hem de PricingEngine sınıfının hesaplama mantığı için yazılan testlerin tamamı başarıyla geçmektedir (2 Passed).
+Ek puan gereksinimi iÃ§in `UstaPlatform.Tests` adÄ±nda bir xUnit projesi oluÅŸturulmuÅŸtur.
+
+Bu proje, Visual Studio Test Explorer Ã¼zerinden Ã§alÄ±ÅŸtÄ±rÄ±ldÄ±ÄŸÄ±nda, hem `Schedule` sÄ±nÄ±fÄ±nÄ±n Dizinleyici (Indexer) Ã¶zelliÄŸi hem de `PricingEngine` sÄ±nÄ±fÄ±nÄ±n hesaplama mantÄ±ÄŸÄ± iÃ§in yazÄ±lan testlerin tamamÄ± baÅŸarÄ±yla geÃ§mektedir (2 Passed).
